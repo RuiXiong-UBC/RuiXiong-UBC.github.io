@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4f6f8c"/>
+      <stop offset="0.55" stop-color="#a9bccb"/>
+      <stop offset="1" stop-color="#e6d6c0"/>
+    </linearGradient>
+    <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9db1c0"/>
+      <stop offset="1" stop-color="#3b5466"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <circle cx="1170" cy="470" r="64" fill="#f6ead6" opacity="0.85"/>
+  <path d="M0 610 L190 420 L300 500 L470 330 L640 520 L820 380 L990 560 L1150 410 L1330 540 L1480 440 L1600 500 L1600 720 L0 720Z" fill="#7a90a2"/>
+  <path d="M430 371 L470 330 L512 378 L490 372 L470 390 L452 370Z M780 412 L820 380 L858 418 L836 412 L820 428 L800 410Z M1110 450 L1150 410 L1188 446 L1166 440 L1150 456 L1130 440Z" fill="#eef2f5"/>
+  <path d="M0 660 L150 570 L270 630 L430 530 L610 650 L770 570 L930 660 L1110 580 L1270 660 L1430 600 L1600 650 L1600 730 L0 730Z" fill="#536b7d"/>
+  <rect y="720" width="1600" height="280" fill="url(#lake)"/>
+  <rect y="720" width="1600" height="3" fill="#efe4d3" opacity="0.5"/>
+  <path d="M0 1000 L0 830 Q320 770 640 860 T1280 820 Q1460 800 1600 830 L1600 1000Z" fill="#26384a"/>
+</svg>
