@@ -153,6 +153,7 @@ html.adm-locked { overflow: hidden; }
 .adm-intro { font-size: 0.85rem; line-height: 1.6; color: var(--muted); background: var(--accent-soft); padding: 12px 14px; border-radius: 8px; }
 .adm-intro p { margin: 0 0 6px; }
 .adm-intro ol { margin: 0; padding-left: 1.3em; }
+.adm-intro .adm-error { color: var(--adm-bad); font-weight: 600; }
 .adm-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .adm-label { font-weight: 700; font-size: 0.85rem; }
 .adm-hint { margin: 0; font-size: 0.75rem; color: var(--muted); }

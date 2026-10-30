@@ -12,7 +12,8 @@
 (function () {
   "use strict";
 
-  var FLAG = "site-admin", DRAFT = "site-draft", SAVED = "site-draft-saved", GH = "site-admin-github";
+  var FLAG = "site-admin", DRAFT = "site-draft", SAVED = "site-draft-saved", GH = "site-admin-github", OK = "site-admin-verified";
+  var uid = 0;
 
   function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function store(k, v) {
@@ -21,10 +22,28 @@
       return true;
     } catch (e) { return false; }
   }
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function parse(s) { try { return JSON.parse(s); } catch (e) { return null; } }
+
+  // 在自己电脑上直接打开文件时不需要登录；放到网上后，必须先用 GitHub 令牌登录，
+  // 并且这个令牌的主人对网站仓库有写权限，才能进入管理模式
+  var local = location.protocol === "file:" || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+  function repoKey(c) { return (c.owner + "/" + c.repo).toLowerCase(); }
+  function verified() {
+    var c = parse(load(GH) || "");
+    return !!(c && c.token && load(OK) === repoKey(c));
+  }
 
   var wants = /(^|[?&])admin(=|&|$)/.test(location.search.slice(1)) || location.hash === "#admin";
+  var allowed = local || verified();
+  if (wants && !allowed) {
+    loadCSS();
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", openLogin);
+    else openLogin();
+    return;
+  }
   if (wants) store(FLAG, "1");
-  if (!wants && load(FLAG) !== "1") {
+  if (!allowed || (!wants && load(FLAG) !== "1")) {
     // 在已打开的页面后面补上 #admin 时，浏览器不会自动刷新，这里替你刷新
     window.addEventListener("hashchange", function () {
       if (location.hash === "#admin") location.reload();
@@ -35,9 +54,6 @@
     try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
   }
 
-  function clone(o) { return JSON.parse(JSON.stringify(o)); }
-  function parse(s) { try { return JSON.parse(s); } catch (e) { return null; } }
-
   // 线上版本 vs 本地草稿
   var liveJSON = JSON.stringify(window.SITE || {});
   var draftJSON = load(DRAFT);
@@ -45,11 +61,14 @@
   var site = (draftJSON && parse(draftJSON)) || clone(window.SITE || {});
   window.SITE = site;
   document.documentElement.classList.add("is-admin");
+  loadCSS();
 
-  var css = document.createElement("link");
-  css.rel = "stylesheet";
-  css.href = "assets/admin.css";
-  document.head.appendChild(css);
+  function loadCSS() {
+    var css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href = "assets/admin.css";
+    document.head.appendChild(css);
+  }
 
   var LANGS = [{ code: "zh", label: "中" }, { code: "en", label: "EN" }];
   var SECTION_NAMES = { education: "教育背景", experience: "实习与工作经历", publications: "出版物", projects: "项目" };
@@ -98,7 +117,6 @@
   }
 
   /* ---------- 小型 DOM 工具 ---------- */
-  var uid = 0;
   function h(tag, cls, text) {
     var el = document.createElement(tag);
     if (cls) el.className = cls;
@@ -450,7 +468,8 @@
     document.body.appendChild(drawer);
     [backdrop, close, cancel].forEach(function (el) { el.addEventListener("click", closeDrawer); });
     drawerApply.addEventListener("click", function () {
-      if (onApply) onApply();
+      // apply 返回 false 时表单保持打开（例如登录还在验证）
+      if (onApply && onApply() === false) return;
       closeDrawer();
     });
   }
@@ -473,7 +492,7 @@
     onApply = function () {
       var out = {};
       eds.forEach(function (x) { out[x.f.key] = x.e.get(); });
-      apply(out);
+      return apply(out);
     };
     drawer.hidden = false;
     document.documentElement.classList.add("adm-locked");
@@ -520,11 +539,74 @@
       if (then && ghConfig()) then();
     },
     "<p>保存时，网页会用这个令牌把修改直接提交到你的 GitHub 仓库。令牌只保存在这台电脑的浏览器里，不会出现在网站上。</p>" +
-    "<ol><li>打开 GitHub → 右上角头像 → Settings → Developer settings → Personal access tokens → <b>Fine-grained tokens</b> → Generate new token</li>" +
-    "<li>Repository access 选 <b>Only select repositories</b>，只选网站仓库</li>" +
-    "<li>Permissions → Repository permissions → <b>Contents</b> 选 <b>Read and write</b></li>" +
-    "<li>生成后复制令牌，粘贴到下面</li></ol>",
+    tokenSteps(),
     "保存设置");
+  }
+
+  /* ---------- 网上的管理员登录 ---------- */
+  function tokenSteps() {
+    return "<ol><li>打开 GitHub → 右上角头像 → Settings → Developer settings → Personal access tokens → <b>Fine-grained tokens</b> → Generate new token</li>" +
+      "<li>Repository access 选 <b>Only select repositories</b>，只选网站仓库</li>" +
+      "<li>Permissions → Repository permissions → <b>Contents</b> 选 <b>Read and write</b></li>" +
+      "<li>生成后复制令牌，粘贴到下面</li></ol>";
+  }
+
+  // 只有对网站仓库有写权限的 GitHub 账号，它的令牌才能通过
+  function checkAccess(cfg) {
+    return fetch("https://api.github.com/repos/" + encodeURIComponent(cfg.owner) + "/" + encodeURIComponent(cfg.repo),
+      { headers: ghHeaders(cfg), cache: "no-store" })
+      .then(function (r) {
+        if (r.status === 401) throw new Error("令牌无效或已过期");
+        if (!r.ok) throw new Error("找不到仓库 " + cfg.owner + "/" + cfg.repo);
+        return r.json();
+      })
+      .then(function (j) {
+        if (!(j.permissions && j.permissions.push)) throw new Error("这个令牌对网站仓库没有写权限");
+      });
+  }
+
+  function openLogin(error, prev) {
+    if (!drawer) buildDrawer();
+    var c = prev || parse(load(GH) || "") || {};
+    if (!c.owner && /\.github\.io$/i.test(location.hostname)) {
+      c.owner = location.hostname.split(".")[0];
+      var seg = location.pathname.split("/")[1];
+      c.repo = seg && !/\.html?$/i.test(seg) ? seg : location.hostname;
+    }
+    openForm("管理员登录", [
+      { key: "owner", label: "GitHub 用户名", type: "str" },
+      { key: "repo", label: "网站所在的仓库名", type: "str" },
+      { key: "token", label: "访问令牌（Fine-grained token）", type: "str", secret: true }
+    ], { owner: c.owner, repo: c.repo }, function (out) {
+      var cfg = {
+        owner: out.owner || "", repo: out.repo || "", branch: c.branch || "main",
+        dir: c.dir || "", token: out.token || ""
+      };
+      if (!cfg.owner || !cfg.repo || !cfg.token) {
+        closeDrawer();
+        openLogin("请把用户名、仓库名和令牌都填好", cfg);
+        return false;
+      }
+      drawerApply.disabled = true;
+      drawerApply.textContent = "验证中…";
+      checkAccess(cfg).then(function () {
+        store(GH, JSON.stringify(cfg));
+        store(OK, repoKey(cfg));
+        store(FLAG, "1");
+        location.reload();
+      }, function (e) {
+        drawerApply.disabled = false;
+        var msg = e && e.message ? e.message : String(e);
+        if (/Failed to fetch|NetworkError|Load failed/i.test(msg)) msg = "连不上 GitHub，请检查网络";
+        closeDrawer();
+        openLogin(msg, cfg);
+      });
+      return false;
+    },
+    (typeof error === "string" ? '<p class="adm-error">' + error + "</p>" : "") +
+    "<p>管理模式只对网站主人开放。请用对这个网站仓库有写权限的 GitHub 令牌登录；令牌只保存在这台电脑的浏览器里。</p>" +
+    tokenSteps(),
+    "登录");
   }
 
   function b64utf8(s) {
@@ -664,6 +746,7 @@
         '<button type="button" class="adm-btn" data-bar="download">下载 content.js</button>' +
         '<button type="button" class="adm-btn" data-bar="discard">放弃修改</button>' +
         '<button type="button" class="adm-btn" data-bar="exit">退出管理</button>' +
+        (local ? "" : '<button type="button" class="adm-btn" data-bar="logout">退出登录</button>') +
         '<button type="button" class="adm-btn adm-primary" data-bar="save">保存到网站</button>' +
       "</div>";
     document.body.appendChild(bar);
@@ -684,6 +767,11 @@
         store(FLAG, null);
         location.href = location.pathname;
       }
+      // 清掉这台电脑上保存的令牌，下次进入管理模式要重新登录（在别人的电脑上用完记得点）
+      else if (a === "logout") twoStep(b, "logout", "确定退出登录？", function () {
+        [FLAG, OK, GH].forEach(function (k) { store(k, null); });
+        location.href = location.pathname;
+      });
     });
     updateStatus();
   }
