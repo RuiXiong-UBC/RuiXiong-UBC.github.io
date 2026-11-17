@@ -10,7 +10,7 @@ window.SITE = {
     "en": "Sensing, Modeling and Control for Brain-Computer Interfaces and Medical Robotics"
   },
   "lastUpdated": "2026.11",
-  "background": "images/uploads/mwkcvmon-1.jpg",
+  "background": "images/uploads/mwkcwd53-1.jpg",
   "contacts": [
     {
       "label": {
