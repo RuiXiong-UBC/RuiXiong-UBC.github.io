@@ -96,11 +96,10 @@ window.SITE = {
       "en": "Curriculum Vitae"
     },
     "subtitle": {
-      "zh": "核心经历一览，完整内容请点各部分的「查看详情」",
-      "en": "Highlights at a glance. Open Details for the full story."
+      "zh": "完整内容请点各部分的「查看详情」",
+      "en": "Open Details for the full story."
     },
-    "bannerTitle": "Curriculum Vitae",
-    "bannerImage": ""
+    "bannerTitle": "Curriculum Vitae"
   },
   "sections": {
     "education": {
