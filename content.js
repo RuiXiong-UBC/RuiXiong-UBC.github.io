@@ -6,8 +6,8 @@ window.SITE = {
     "en": "Rui Xiong"
   },
   "tagline": {
-    "zh": "关注系统建模与控制在医疗机器人中的应用",
-    "en": "Interested in System Modeling and Control for Medical Robotics"
+    "zh": "关注脑机接口与医疗机器人中的传感、建模与控制系统",
+    "en": "Sensing, Modeling and Control for Brain-Computer Interfaces and Medical Robotics"
   },
   "lastUpdated": "2026.11",
   "background": "images/vancouver_background.jpg",
@@ -36,30 +36,30 @@ window.SITE = {
   ],
   "about": {
     "title": {
-      "zh": "关于我",
-      "en": "About Me"
+      "zh": "关于瑞",
+      "en": "About Rui"
     },
     "subtitle": {
-      "zh": "UBC 生物医学工程本科在读 · 致力于医疗机器人与智能控制",
-      "en": "Biomedical Engineering Undergraduate at UBC · Dedicated to Medical Robotics and Intelligent Control"
+      "zh": "UBC 生物医学工程本科在读 · 神经信号与微系统传感 · 脑机接口与机器人控制",
+      "en": "Biomedical Engineering Undergraduate at UBC · Neural Signals & Microsystem Sensing · BCI and Robot Control"
     },
     "photo": "images/rui.jpg",
     "photoCaption": {
-      "zh": "熊瑞",
-      "en": "Rui Xiong"
+      "zh": "熊瑞在北温哥华",
+      "en": "Rui in North Van"
     },
     "text": [
       {
-        "zh": "加拿大不列颠哥伦比亚大学（UBC）生物医学工程本科在读。研究兴趣聚焦于系统建模与控制，以及其在手术机器人和医疗自动化中的应用。\n长期目标是在机器人领域从事控制系统研发，推动相关技术从原型走向临床或工业生产。",
-        "en": "I'm an undergraduate student in Biomedical Engineering at the University of British Columbia. My research interests center on system modeling and control, and their applications in surgical robotics and medical automation. \n\nMy long-term goal is to work on control systems development in robotics, advancing these technologies from prototype to clinical or industrial deployment."
+        "zh": "加拿大不列颠哥伦比亚大学（UBC）生物医学工程本科在读。我关注从神经信号到机器人动作的完整闭环：传感器如何采集脑电、力与位移等信号，如何从这些信号中理解出意图，以及如何为机器人系统建模、设计控制策略，让它安全可靠地执行。",
+        "en": "I'm an undergraduate in Biomedical Engineering at the University of British Columbia. I'm interested in the full loop from neural signals to robot motion: how sensors capture EEG, force and displacement signals, how intent can be decoded from them, and how to model a robotic system and design its control so that it acts safely and reliably."
       },
       {
-        "zh": "曾参与便携式电子内窥镜产品的研发与测试，覆盖成像评估、临床需求转化和软件迭代等环节，并完成一项软件著作权申请。目前正在学习：动态系统建模与控制理论；以 CPC A61B34手术机器人与手术导航为切入点，构建面向医疗器械专利的机器学习检索系统；以及嵌入式开发。",
-        "en": "I have been involved in the development and testing of a portable electronic endoscope, covering imaging evaluation, translating clinical needs into product requirements, and software iteration, and I filed a software copyright registration application. I am currently working on three areas: dynamic system modeling and control theory; a machine learning-based retrieval system for medical device patents, starting from CPC A61B34 (surgical robots and surgical navigation); and embedded systems development."
+        "zh": "曾参与便携式电子内窥镜产品的研发与测试，覆盖成像评估、临床需求转化和软件迭代等环节，并完成一项软件著作权申请。目前正在学习：动态系统建模与控制理论；以及嵌入式开发。",
+        "en": "I have been involved in the development and testing of a portable electronic endoscope, covering imaging evaluation, translating clinical needs into product requirements, and software iteration, and I filed a software copyright registration application. I am currently working on three areas: Dynamic System Modeling and Control Theory and Embedded Systems Development."
       },
       {
-        "zh": "学习工作之外，也长期关注建筑设计，尤其是研究如何借助几何形体与开口组织自然光，让光线成为空间的一部分；大尺度建筑如何通过连续、流动的自然形态构建面向未来的建筑结构设计等相关课题。",
-        "en": "Outside of study and work, I have a long-standing interest in architecture, particularly in how geometric forms and openings can organize natural light so that it becomes part of the space itself, and in how large-scale buildings can use continuous, flowing organic forms to shape forward-looking structural design."
+        "zh": "学习之外，我也长期关注建筑设计，尤其感兴趣特殊的几何形体如何与光线、空间产生联系，以及大体量建筑的未来感设计。",
+        "en": "Outside of my studies, I have long been interested in architectural design, particularly in how unusual geometric forms interact with light and space, and in futuristic design for large-scale buildings."
       }
     ],
     "info": [
@@ -119,14 +119,6 @@ window.SITE = {
         "zh": "教育",
         "en": "Education"
       },
-      "summary": {
-        "zh": "学位",
-        "en": "Degrees"
-      },
-      "intro": {
-        "zh": "学位与学习经历",
-        "en": "Degrees and academic training"
-      },
       "heroImage": "images/gallery/ubcskyview.jpg",
       "groups": [
         {
@@ -149,15 +141,24 @@ window.SITE = {
               "logo": "images/Schools/UBC_sign.jpg",
               "url": "https://bme.ubc.ca/",
               "courses": {
-                "zh": "#大一\nAPSC 100 工程导论 I（3）\nAPSC 160 工程设计中的计算导论（3）\nASIA 320 中国早期史（3）\nBMEG 101 生物医学工程导论（3）\nBMEG 102 生物医学工程实验（2）\nCHEM 121 化学结构与键合（4）\nCHEM 123 热力学、动力学与有机化学（4）\nMATH 100 微分学及其应用（3）\nMATH 101 积分学及其应用（3）\nMATH 152 线性系统（3）\nPHYS 157 工科物理导论 I（3）\nPHYS 158 工科物理导论 II（3）\nPHYS 170 力学 I（3）\nWRDS 150 学科写作与研究（3）\n\n#大二\nBMEG 210 生物医学工程热力学（3）\nBMEG 230 生物力学 I（4）\nBMEG 245 生命的基本单元：从细胞到系统（4）\nCPEN 221 软件构造 I（4）\nELEC 462 微系统中的传感器与执行器（3）\nMATH 221 矩阵代数（3）\nMATH 253 多元微积分（3）",
-                "en": "#Year 1\nAPSC 100 Introduction to Engineering I (3)\nAPSC 160 Introduction to Computation in Engineering Design (3)\nASIA 320 History of Early China (3)\nBMEG 101 Introduction to Biomedical Engineering (3)\nBMEG 102 Biomedical Engineering Lab (2)\nCHEM 121 Structure and Bonding in Chemistry (4)\nCHEM 123 Thermodynamics, Kinetics and Organic Chemistry (4)\nMATH 100 Differential Calculus with Applications (3)\nMATH 101 Integral Calculus with Applications (3)\nMATH 152 Linear Systems (3)\nPHYS 157 Introductory Physics for Engineers I (3)\nPHYS 158 Introductory Physics for Engineers II (3)\nPHYS 170 Mechanics I (3)\nWRDS 150 Writing and Research in the Disciplines (3)\n\n#Year 2\nBMEG 210 Thermodynamics in Biomedical Engineering (3)\nBMEG 230 Biomechanics I (4)\nBMEG 245 The Fundamental Units of Life: From Cells To Systems (4)\nCPEN 221 Software Construction I (4)\nELEC 462 Sensors and Actuators in Microsystems (3)\nMATH 221 Matrix Algebra (3)\nMATH 253 Multivariable Calculus (3)"
+                "zh": "#大一\nAPSC 100 工程导论 I（3）\nAPSC 160 工程设计中的计算导论（3）\nASIA 320 中国早期史（3）\nBMEG 101 生物医学工程导论（3）\nBMEG 102 生物医学工程实验（2）\nCHEM 121 化学结构与键合（4）\nMATH 100 微分学及其应用（3）\nMATH 101 积分学及其应用（3）\nMATH 152 线性系统（3）\nPHYS 157 工程物理 I（3）\nPHYS 158 工程物理 II（3）\nPHYS 170 力学 I（3）\nWRDS 150 学术写作（3）\n\n#大二\nBMEG 210 生物医学工程热力学（3）\nBMEG 230 生物力学 I（4）\nBMEG 245 生命的基本单元：从细胞到系统（4）\nCPEN 221 软件构造 I（4）\nELEC 462 微系统中的传感器与执行器（3）\nMATH 221 矩阵代数（3）\nMATH 253 多元微积分（3）\nCHEM 123 热力学、动力学与有机化学（4）",
+                "en": "#Year 1\nAPSC 100 Introduction to Engineering I (3)\nAPSC 160 Introduction to Computation in Engineering Design (3)\nASIA 320 History of Early China (3)\nBMEG 101 Introduction to Biomedical Engineering (3)\nBMEG 102 Biomedical Engineering Lab (2)\nCHEM 121 Structure and Bonding in Chemistry (4)\nMATH 100 Differential Calculus with Applications (3)\nMATH 101 Integral Calculus with Applications (3)\nMATH 152 Linear Systems (3)\nPHYS 157 Introductory Physics for Engineers I (3)\nPHYS 158 Introductory Physics for Engineers II (3)\nPHYS 170 Mechanics I (3)\nWRDS 150 Writing and Research in the Disciplines (3)\n\n#Year 2\nBMEG 210 Thermodynamics in Biomedical Engineering (3)\nBMEG 230 Biomechanics I (4)\nBMEG 245 The Fundamental Units of Life: From Cells To Systems (4)\nCPEN 221 Software Construction I (4)\nELEC 462 Sensors and Actuators in Microsystems (3)\nMATH 221 Matrix Algebra (3)\nMATH 253 Multivariable Calculus (3)\nCHEM 123 Thermodynamics, Kinetics and Organic Chemistry (4)"
               },
               "images": [
                 {
                   "src": "images/gallery/ubcskyview.jpg"
                 },
                 {
-                  "src": "images/gallery/sak_ubc.jpg"
+                  "src": "images/uploads/mwkam7go-1.jpg"
+                },
+                {
+                  "src": "images/uploads/mwkam7go-2.jpg"
+                },
+                {
+                  "src": "images/uploads/mwkam7go-3.jpg"
+                },
+                {
+                  "src": "images/uploads/mwkam7go-4.jpg"
                 }
               ]
             },
@@ -180,6 +181,12 @@ window.SITE = {
               "images": [
                 {
                   "src": "images/gallery/NFLSXC_gate.jpg"
+                },
+                {
+                  "src": "images/uploads/mwkam7go-5.jpg"
+                },
+                {
+                  "src": "images/uploads/mwkam7go-6.jpg"
                 }
               ],
               "courses": {
@@ -189,7 +196,13 @@ window.SITE = {
               "coursesTitle": {
                 "zh": "大学先修课",
                 "en": "Advanced Placements Courses ＆ Exams"
-              }
+              },
+              "bullets": [
+                {
+                  "zh": "托福：104/120；美国大学入学考试：33/36",
+                  "en": "TOEFL: 104 / 120; ACT: 33 / 36"
+                }
+              ]
             }
           ]
         }
@@ -197,16 +210,8 @@ window.SITE = {
     },
     "experience": {
       "title": {
-        "zh": "实习与工作经历",
-        "en": "Internships & Work"
-      },
-      "navTitle": {
-        "zh": "经历",
-        "en": "Experience"
-      },
-      "summary": {
-        "zh": "全职、实习与科研助理",
-        "en": "Full-time roles, internships and research positions"
+        "zh": "工作与实习经历",
+        "en": "Works & Internships"
       },
       "heroImage": "images/intern_work/suzhou.jpg",
       "groups": [
@@ -361,14 +366,6 @@ window.SITE = {
         "zh": "出版物",
         "en": "Publications"
       },
-      "navTitle": {
-        "zh": "出版物",
-        "en": "Publications"
-      },
-      "summary": {
-        "zh": "期刊论文、会议论文与专利",
-        "en": "Journal articles, conference papers and patents"
-      },
       "groups": [
         {
           "title": {
@@ -391,14 +388,6 @@ window.SITE = {
       "title": {
         "zh": "项目",
         "en": "Projects"
-      },
-      "navTitle": {
-        "zh": "项目",
-        "en": "Projects"
-      },
-      "summary": {
-        "zh": "个人与团队项目，代码在 GitHub",
-        "en": "Personal and team projects, code on GitHub"
       },
       "intro": {
         "zh": "做过的项目，点击 GitHub 查看代码",
