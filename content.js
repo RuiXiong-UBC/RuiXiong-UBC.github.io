@@ -10,7 +10,7 @@ window.SITE = {
     "en": "Sensing, Modeling and Control for Brain-Computer Interfaces and Medical Robotics"
   },
   "lastUpdated": "2026.11",
-  "background": "images/vancouver_background.jpg",
+  "background": "images/uploads/mwkcvmon-1.jpg",
   "contacts": [
     {
       "label": {
@@ -29,9 +29,7 @@ window.SITE = {
       "label": {
         "zh": "领英",
         "en": "LinkedIn"
-      },
-      "text": "rui-xiong-414430400",
-      "url": "linkedin.com/in/rui-xiong-414430400"
+      }
     }
   ],
   "about": {
@@ -149,16 +147,13 @@ window.SITE = {
                   "src": "images/gallery/ubcskyview.jpg"
                 },
                 {
-                  "src": "images/uploads/mwkam7go-1.jpg"
-                },
-                {
                   "src": "images/uploads/mwkam7go-2.jpg"
                 },
                 {
-                  "src": "images/uploads/mwkam7go-3.jpg"
+                  "src": "images/uploads/mwkcvmon-2.jpg"
                 },
                 {
-                  "src": "images/uploads/mwkam7go-4.jpg"
+                  "src": "images/uploads/mwkcvmon-3.jpg"
                 }
               ]
             },
@@ -381,9 +376,18 @@ window.SITE = {
       "groups": [
         {
           "title": "",
-          "items": []
+          "items": [
+            {
+              "time": "",
+              "title": {
+                "zh": "新条目",
+                "en": "New entry"
+              }
+            }
+          ]
         }
-      ]
+      ],
+      "heroImage": "images/uploads/mwkcvmon-4.jpg"
     },
     "publications": {
       "title": {
@@ -425,7 +429,7 @@ window.SITE = {
         "zh": "论文与项目的简介，完整代码和资料见 GitHub",
         "en": "Papers and projects in brief. Code and details are on GitHub."
       },
-      "heroImage": "images/intern_work/guangzhou.jpg",
+      "heroImage": "images/uploads/mwkcvmon-5.jpg",
       "github": "https://github.com/RuiXiong-UBC",
       "groups": [
         {
