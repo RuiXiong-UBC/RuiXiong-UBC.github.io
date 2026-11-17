@@ -77,6 +77,17 @@ window.SITE = {
           "en": "English, Chinese"
         }
       }
+    ],
+    "images": [
+      {
+        "src": "images/uploads/mwkf4cgh-1.png"
+      },
+      {
+        "src": "images/uploads/mwkf4cgh-2.jpg"
+      },
+      {
+        "src": "images/uploads/mwkf4cgh-3.jpg"
+      }
     ]
   },
   "cv": {
