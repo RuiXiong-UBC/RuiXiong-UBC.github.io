@@ -55,9 +55,21 @@
   }
 
   // 线上版本 vs 本地草稿
+  //   BASE：草稿开始时网站上的内容；SAVED / SAVED_AT：上次保存到网站的内容和时间
+  var BASE = "site-draft-base", SAVED_AT = "site-draft-saved-at";
   var liveJSON = JSON.stringify(window.SITE || {});
   var draftJSON = load(DRAFT);
-  if (draftJSON === liveJSON) { store(DRAFT, null); store(SAVED, null); draftJSON = null; }
+  // 刚保存过的 10 分钟内，网站可能还没更新完，先继续显示草稿
+  var justSaved = Date.now() - (+load(SAVED_AT) || 0) < 10 * 60 * 1000;
+  function dropDraft() {
+    [DRAFT, SAVED, SAVED_AT, BASE].forEach(function (k) { store(k, null); });
+    draftJSON = null;
+  }
+  if (draftJSON === liveJSON) dropDraft();
+  // 草稿就是上次保存的版本、之后没再改：改用网站上的最新内容（网站可能在别处又更新过）
+  else if (draftJSON && draftJSON === load(SAVED) && !justSaved) dropDraft();
+  // 有没保存的修改，但网站在这之后被别处更新过：继续用草稿，但提醒保存会覆盖那些更新
+  var stale = !!draftJSON && !justSaved && load(BASE) != null && load(BASE) !== liveJSON;
   var site = (draftJSON && parse(draftJSON)) || clone(window.SITE || {});
   window.SITE = site;
   document.documentElement.classList.add("is-admin");
@@ -77,8 +89,11 @@
   var storageFull = false;
   function saveDraft() {
     var cur = JSON.stringify(site);
-    if (cur === liveJSON) { store(DRAFT, null); storageFull = false; }
-    else storageFull = !store(DRAFT, cur);
+    if (cur === liveJSON) { store(DRAFT, null); store(BASE, null); storageFull = false; }
+    else {
+      if (load(BASE) == null) store(BASE, liveJSON);
+      storageFull = !store(DRAFT, cur);
+    }
     updateStatus();
   }
   function rerender() {
@@ -94,6 +109,7 @@
       if (cur === liveJSON) { msg = "与网站内容一致"; tone = "ok"; }
       else if (cur === load(SAVED)) { msg = "已保存到 GitHub，网站约 1 分钟后更新"; tone = "ok"; }
       else { msg = "有修改还没保存到网站"; tone = "warn"; }
+      if (stale) { msg = "网站在别处更新过，这份草稿是旧版本：点「放弃修改」载入最新内容"; tone = "bad"; }
       if (storageFull) { msg = "浏览器存储已满，请尽快保存到网站"; tone = "bad"; }
     }
     el.textContent = msg;
@@ -712,6 +728,9 @@
       Object.keys(site).forEach(function (k) { delete site[k]; });
       Object.keys(data).forEach(function (k) { site[k] = data[k]; });
       store(SAVED, JSON.stringify(site));
+      store(SAVED_AT, String(Date.now()));
+      store(BASE, JSON.stringify(site));   // 网站上现在就是这一版
+      stale = false;
       saveDraft();
       rerender();
     }).catch(function (e) {
@@ -774,11 +793,11 @@
       var a = b.getAttribute("data-bar");
       if (a === "site" || a === "contacts") openEditor(a);
       else if (a === "github") openGitHubSettings();
-      else if (a === "save") saveToGitHub();
+      // 草稿是旧版本时，保存会覆盖网站上更新的内容，先确认一次
+      else if (a === "save") { if (stale) twoStep(b, "save", "确定覆盖网站？", saveToGitHub); else saveToGitHub(); }
       else if (a === "download") downloadContent();
       else if (a === "discard") twoStep(b, "discard", "确定放弃？", function () {
-        store(DRAFT, null);
-        store(SAVED, null);
+        dropDraft();
         location.reload();
       });
       else if (a === "exit") {
