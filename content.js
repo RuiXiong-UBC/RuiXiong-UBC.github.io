@@ -345,16 +345,8 @@ window.SITE = {
         "zh": "证书与荣誉",
         "en": "Certificates & Honors"
       },
-      "navTitle": {
-        "zh": "荣誉",
-        "en": "Honors"
-      },
-      "summary": {
-        "zh": "资格证书、奖项与奖学金",
-        "en": "Certifications, awards and scholarships"
-      },
       "intro": {
-        "zh": "资格证书、奖项与奖学金，按年份排列",
+        "zh": "资格证书、奖项与奖学金",
         "en": "Certifications, awards and scholarships, by year"
       },
       "groups": [
@@ -373,13 +365,7 @@ window.SITE = {
               },
               "kind": "scholarship",
               "stage": "undergrad",
-              "logo": "images/Schools/UBC_sign.jpg",
-              "text": [
-                {
-                  "zh": "UBC 择优入学奖学金",
-                  "en": "Merit-based entrance scholarship at UBC"
-                }
-              ]
+              "logo": "images/uploads/mwkesof4-1.jpg"
             },
             {
               "time": "2023",
@@ -393,12 +379,7 @@ window.SITE = {
               },
               "kind": "award",
               "stage": "highschool",
-              "text": [
-                {
-                  "zh": "面向高中生的国际团队数学建模竞赛",
-                  "en": "International team contest in mathematical modeling for high school students"
-                }
-              ]
+              "logo": "images/uploads/mwkesof4-2.webp"
             }
           ]
         }
@@ -436,10 +417,6 @@ window.SITE = {
       "navTitle": {
         "zh": "出版物与项目",
         "en": "Research"
-      },
-      "summary": {
-        "zh": "论文与做过的项目，代码在 GitHub",
-        "en": "Papers and things I have built"
       },
       "intro": {
         "zh": "论文与项目的简介，完整代码和资料见 GitHub",
