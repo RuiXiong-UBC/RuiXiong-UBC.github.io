@@ -376,7 +376,7 @@ window.SITE = {
               },
               "kind": "scholarship",
               "stage": "undergrad",
-              "logo": "images/uploads/mwkesof4-1.jpg"
+              "logo": "images/uploads/mwkfpeim-1.jpg"
             },
             {
               "time": "2023",
@@ -391,6 +391,19 @@ window.SITE = {
               "kind": "award",
               "stage": "highschool",
               "logo": "images/uploads/mwkesof4-2.webp"
+            },
+            {
+              "time": "2026",
+              "title": {
+                "zh": "不列颠哥伦比亚省工程师与地球科学家协会会员",
+                "en": "Student Member, Engineers and Geoscientists BC"
+              },
+              "org": {
+                "zh": "不列颠哥伦比亚省工程师与地球科学家协会（EGBC）",
+                "en": "Engineers and Geoscientists BC"
+              },
+              "stage": "undergrad",
+              "logo": "images/uploads/mwkfpeim-2.png"
             }
           ]
         }
