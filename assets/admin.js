@@ -71,7 +71,7 @@
   }
 
   var LANGS = [{ code: "zh", label: "中" }, { code: "en", label: "EN" }];
-  var SECTION_NAMES = { education: "教育背景", experience: "实习与工作经历", publications: "出版物", projects: "项目" };
+  var SECTION_NAMES = { education: "教育背景", experience: "实习与工作经历", honors: "证书与荣誉", publications: "出版物", projects: "项目" };
 
   /* ---------- 草稿与状态 ---------- */
   var storageFull = false;
@@ -214,7 +214,7 @@
       sel.appendChild(op);
     });
     sel.value = v || f.options[0].value;
-    return { el: wrapField(f, sel), get: function () { return sel.value; } };
+    return { el: wrapField(f, sel), get: function () { return sel.value || undefined; } };
   }
 
   // 上传的图片先以 data URL 存在草稿里，保存到 GitHub 时再写成 images/uploads/ 下的文件
@@ -397,7 +397,23 @@
     if (id === "projects") f.push({ key: "github", label: "我的 GitHub 主页", type: "str", placeholder: "https://github.com/yourname", hint: "页面底部会显示「在 GitHub 上查看全部项目」按钮" });
     return f;
   }
+  function honorFields() {
+    var none = { value: "", label: "不显示" };
+    return [
+      I("time", "获得时间", { hint: "例如 2025.06 或 2025；页面按年份自动排序，新的在前" }),
+      I("title", "名称", { hint: "例如：软件设计师（软考中级）、低压电工作业证、UBC 奖学金" }),
+      I("org", "颁发机构"),
+      { key: "kind", label: "类别", type: "select", options: [none, { value: "cert", label: "证书" }, { value: "award", label: "奖项 / 奖状" }, { value: "scholarship", label: "奖学金" }] },
+      { key: "stage", label: "所属阶段", type: "select", options: [none, { value: "highschool", label: "高中" }, { value: "undergrad", label: "本科" }, { value: "grad", label: "研究生" }] },
+      { key: "url", label: "点击名称打开的链接（可选）", type: "str", placeholder: "https://", hint: "例如证书查询页" },
+      { key: "logo", label: "右侧图片", type: "image", hint: "颁发机构的标志，或者证书的小图" },
+      { key: "text", label: "说明", type: "list", item: I(null, "", { multiline: true }), add: "添加段落", hint: HTML_HINT },
+      { key: "images", label: "证书照片", type: "list", item: imageItem, add: "添加图片" },
+      { key: "links", label: "按钮链接（证书 PDF 等）", type: "list", item: linkItem, add: "添加链接" }
+    ];
+  }
   function entryFields(id) {
+    if (id === "honors") return honorFields();
     var f = [I("time", "时间", { hint: "例如 2021.09 – 2025.06；英文写法一样时只填中文那栏即可" }), I("title", "标题")];
     if (id === "publications") {
       f.push(I("authors", "作者", { hint: "用 <b>你的名字</b> 把自己加粗" }), I("venue", "期刊 / 会议"));
@@ -431,7 +447,9 @@
     if (kind === "contacts") {
       return { title: "联系方式", target: site, fields: [{ key: "contacts", label: "", type: "list", item: contactItem, add: "添加联系方式" }] };
     }
-    if (kind === "section") return { title: SECTION_NAMES[ks[1]] || "简历部分", fields: sectionFields(ks[1]), target: getPath(path) };
+    if (kind === "section") {
+      return { title: ks[1] === "projects" ? "出版物与项目" : SECTION_NAMES[ks[1]] || "简历部分", fields: sectionFields(ks[1]), target: getPath(path) };
+    }
     if (kind === "group") return { title: "分组", fields: [I("title", "分组标题", { hint: "不需要分组标题就全部留空" })], target: getPath(path) };
     if (kind === "entry") return { title: "编辑条目 · " + (SECTION_NAMES[ks[1]] || ""), fields: entryFields(ks[1]), target: getPath(path) };
     return null;
@@ -788,8 +806,11 @@
       if (kind === "group") tools.appendChild(h("span", "adm-tools-label", "分组"));
       tools.appendChild(button("编辑", "adm-tool", { "data-act": "edit" }));
       if (kind === "entry" || kind === "group") {
-        tools.appendChild(button("↑", "adm-tool", { "data-act": "up", "aria-label": "上移" }));
-        tools.appendChild(button("↓", "adm-tool", { "data-act": "down", "aria-label": "下移" }));
+        // 证书与荣誉按年份自动排序，不需要手动上移下移
+        if (!/^sections\.honors\./.test(path)) {
+          tools.appendChild(button("↑", "adm-tool", { "data-act": "up", "aria-label": "上移" }));
+          tools.appendChild(button("↓", "adm-tool", { "data-act": "down", "aria-label": "下移" }));
+        }
         tools.appendChild(button("删除", "adm-tool adm-danger", { "data-act": "del" }));
       }
       if (kind === "group") el.insertBefore(tools, el.firstChild); else el.appendChild(tools);
@@ -800,9 +821,13 @@
     });
     var page = window.SiteApp && window.SiteApp.page;
     if (page && page !== "home") {
-      var pager = app.querySelector(".pager");
-      var addGroup = button("+ 新增分组", "adm-add adm-add--group", { "data-act": "add-group", "data-path": "sections." + page });
-      if (pager) pager.parentNode.insertBefore(addGroup, pager);
+      // 每个部分末尾一个新增按钮；合并页面（出版物与项目）里各部分分开加
+      app.querySelectorAll(".part[data-part]").forEach(function (part) {
+        var k = part.getAttribute("data-part");
+        part.appendChild(k === "honors"
+          ? button("+ 新增证书 / 奖项", "adm-add adm-add--group", { "data-act": "add-entry", "data-path": "sections.honors.groups.0" })
+          : button("+ 新增" + (part.id ? SECTION_NAMES[k] : "") + "分组", "adm-add adm-add--group", { "data-act": "add-group", "data-path": "sections." + k }));
+      });
     }
     updateStatus();
   }
@@ -834,6 +859,12 @@
     });
     else if (act === "add-entry") {
       var g = getPath(path);
+      if (!g) {
+        // 还没有分组时（例如第一次添加证书）先建一个
+        var sec = getPath(path.replace(/\.groups\.\d+$/, ""));
+        sec.groups = [{ title: "", items: [] }];
+        g = sec.groups[0];
+      }
       g.items = Array.isArray(g.items) ? g.items : [];
       g.items.push({ time: "", title: { zh: "新条目", en: "New entry" } });
       commit();

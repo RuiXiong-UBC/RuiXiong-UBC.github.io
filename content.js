@@ -361,6 +361,30 @@ window.SITE = {
         }
       ]
     },
+    "honors": {
+      "title": {
+        "zh": "证书与荣誉",
+        "en": "Certificates & Honors"
+      },
+      "navTitle": {
+        "zh": "荣誉",
+        "en": "Honors"
+      },
+      "summary": {
+        "zh": "资格证书、奖项与奖学金",
+        "en": "Certifications, awards and scholarships"
+      },
+      "intro": {
+        "zh": "资格证书、奖项与奖学金，按年份排列",
+        "en": "Certifications, awards and scholarships, by year"
+      },
+      "groups": [
+        {
+          "title": "",
+          "items": []
+        }
+      ]
+    },
     "publications": {
       "title": {
         "zh": "出版物",
@@ -386,15 +410,23 @@ window.SITE = {
     },
     "projects": {
       "title": {
-        "zh": "项目",
-        "en": "Projects"
+        "zh": "出版物与项目",
+        "en": "Publications & Projects"
+      },
+      "navTitle": {
+        "zh": "出版物与项目",
+        "en": "Research"
+      },
+      "summary": {
+        "zh": "论文与做过的项目，代码在 GitHub",
+        "en": "Papers and things I have built"
       },
       "intro": {
-        "zh": "做过的项目，点击 GitHub 查看代码",
-        "en": "Things I have built. Code is on GitHub."
+        "zh": "论文与项目的简介，完整代码和资料见 GitHub",
+        "en": "Papers and projects in brief. Code and details are on GitHub."
       },
       "heroImage": "images/intern_work/guangzhou.jpg",
-      "github": "https://github.com/yourname",
+      "github": "https://github.com/RuiXiong-UBC",
       "groups": [
         {
           "title": "",

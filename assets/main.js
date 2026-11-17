@@ -4,7 +4,21 @@
 
   var SITE = window.SITE || {};
   var SECTIONS = SITE.sections || {};
-  var ORDER = ["education", "experience", "publications", "projects"];
+  var ORDER = ["education", "experience", "honors", "projects"];
+  // 「出版物与项目」一页里先放出版物、再放项目
+  var PARTS = { projects: ["publications", "projects"] };
+  // 证书与荣誉按年份自动排序（新的在前）
+  var BY_YEAR = { honors: true };
+  var KINDS = {
+    cert: { zh: "证书", en: "Certificate" },
+    award: { zh: "奖项", en: "Award" },
+    scholarship: { zh: "奖学金", en: "Scholarship" }
+  };
+  var STAGES = {
+    highschool: { zh: "高中", en: "High school" },
+    undergrad: { zh: "本科", en: "Undergraduate" },
+    grad: { zh: "研究生", en: "Graduate" }
+  };
   var LANGS = [
     { code: "zh", label: "中", name: "中文", html: "zh-CN" },
     { code: "en", label: "EN", name: "English", html: "en" }
@@ -29,7 +43,10 @@
     githubAll: { zh: "在 GitHub 上查看全部项目", en: "See all projects on GitHub" },
     details: { zh: "查看详情", en: "Details" },
     courses: { zh: "课程", en: "Courses" },
-    empty: { zh: "内容即将更新", en: "Coming soon" }
+    empty: { zh: "内容即将更新", en: "Coming soon" },
+    noYear: { zh: "其他", en: "Other" },
+    publications: { zh: "出版物", en: "Publications" },
+    projects: { zh: "项目", en: "Projects" }
   };
 
   var ICON_PATHS = {
@@ -37,6 +54,7 @@
     experience: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><path d="M3 13h18"/>',
     publications: '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h7M9 17h7"/>',
     projects: '<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>',
+    honors: '<circle cx="12" cy="9" r="5.5"/><path d="M8.6 13.4L7 21l5-2.6 5 2.6-1.6-7.6"/>',
     github: '<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
     arrow: '<path d="M9.5 6l6 6-6 6"/>',
     back: '<path d="M14.5 6l-6 6 6 6"/>',
@@ -91,8 +109,46 @@
   }
   function list(v) { return Array.isArray(v) ? v : v ? [v] : []; }
   function sectionIds() { return ORDER.filter(function (id) { return SECTIONS[id]; }); }
-  function countItems(sec) {
-    return list(sec.groups).reduce(function (n, g) { return n + list(g.items).length; }, 0);
+  function partsOf(id) { return (PARTS[id] || [id]).filter(function (k) { return SECTIONS[k]; }); }
+  function countItems(id) {
+    return partsOf(id).reduce(function (n, k) {
+      return list(SECTIONS[k].groups).reduce(function (m, g) { return m + list(g.items).length; }, n);
+    }, 0);
+  }
+
+  // 一个部分里要显示的分组：[{ title, path（分组在 content.js 里的位置，没有就是 null）, entries: [{ it, path }] }]
+  function viewGroups(k) {
+    var groups = list((SECTIONS[k] || {}).groups).map(function (g, gi) {
+      var base = "sections." + k + ".groups." + gi;
+      return {
+        title: t(g.title), path: base,
+        entries: list(g.items).map(function (it, j) { return { it: it, path: base + ".items." + j }; })
+      };
+    });
+    if (!BY_YEAR[k]) return groups;
+    // 按年份重新分组：时间里第一个四位数年份（及其后的月份）决定先后，没写年份的放最后
+    var all = [];
+    groups.forEach(function (g) { all = all.concat(g.entries); });
+    all.forEach(function (e, i) {
+      var m = /((?:19|20)\d\d)(?:\s*[.\-\/年]\s*(\d{1,2})(?!\d))?/.exec(plain(t(e.it.time)));
+      e.year = m ? m[1] : "";
+      e.key = m ? +m[1] * 100 + (+m[2] || 0) : -1;
+      e.i = i;
+    });
+    all.sort(function (a, b) { return b.key - a.key || a.i - b.i; });
+    var byYear = [];
+    all.forEach(function (e) {
+      var last = byYear[byYear.length - 1];
+      if (!last || last.year !== e.year) byYear.push(last = { year: e.year, title: e.year || ui("noYear"), path: null, entries: [] });
+      last.entries.push(e);
+    });
+    return byYear;
+  }
+
+  // 证书与荣誉的类别、阶段小标签
+  function tagsHTML(it) {
+    var tags = [KINDS[it.kind], STAGES[it.stage]].filter(Boolean);
+    return tags.length ? '<p class="entry-tags">' + tags.map(function (x) { return '<span class="tag">' + t(x) + "</span>"; }).join("") + "</p>" : "";
   }
   function isWeb(url) { return /^https?:/i.test(url); }
   function linkAttrs(url) {
@@ -215,7 +271,7 @@
         '<span class="cv-icon">' + icon(id) + "</span>" +
         "<h3>" + t(s.title) + "</h3>" +
         "<p>" + t(s.summary) + "</p>" +
-        '<span class="cv-meta"><span>' + count(countItems(s)) + "</span><span>" + ui("open") + icon("down") + "</span></span></a>";
+        '<span class="cv-meta"><span>' + count(countItems(id)) + "</span><span>" + ui("open") + icon("down") + "</span></span></a>";
     }).join("");
     var blocks = sectionIds().map(blockHTML).join("");
     var banner = cv.bannerImage ? ' style="background-image:url(&quot;' + esc(cv.bannerImage) + '&quot;)"' : "";
@@ -260,20 +316,24 @@
       '<h4 class="entry-title">' + t(it.title) + "</h4>" +
       (it.authors ? '<p class="entry-authors">' + t(it.authors) + "</p>" : "") +
       (meta ? '<p class="entry-org">' + meta + "</p>" : "") +
+      tagsHTML(it) +
       (it.github ? links(null, it.github) : "") +
       "</div>" + logo + "</article>";
   }
 
   function blockHTML(id) {
     var s = SECTIONS[id];
-    var groups = list(s.groups).map(function (g, gi) {
-      var items = list(g.items).map(function (it, j) {
-        return compactHTML(it, "sections." + id + ".groups." + gi + ".items." + j);
+    var multi = partsOf(id).length > 1;
+    var groups = partsOf(id).map(function (k) {
+      return viewGroups(k).map(function (g) {
+        var items = g.entries.map(function (e) { return compactHTML(e.it, e.path); }).join("");
+        if (!items) return "";
+        // 合并的页面里，没写分组标题的就用「出版物」「项目」当标题
+        var title = g.title || (multi ? ui(k) : "");
+        return (title ? '<h4 class="cv-group-title">' + title + "</h4>" : "") + '<div class="group-list">' + items + "</div>";
       }).join("");
-      if (!items) return "";
-      var title = t(g.title);
-      return (title ? '<h4 class="cv-group-title">' + title + "</h4>" : "") + '<div class="group-list">' + items + "</div>";
     }).join("");
+    if (!groups) groups = '<p class="cv-empty">' + ui("empty") + "</p>";
     return '<section class="cv-block" id="' + id + '">' +
       '<header class="cv-block-head"><span class="cv-block-icon">' + icon(id) + "</span>" +
         "<h3>" + t(s.title) + "</h3>" +
@@ -292,6 +352,7 @@
       (it.authors ? '<p class="entry-authors">' + t(it.authors) + "</p>" : "") +
       (meta ? '<p class="entry-org">' + meta + "</p>" : "") +
       (it.venue ? '<p class="entry-venue">' + t(it.venue) + "</p>" : "") +
+      tagsHTML(it) +
       (list(it.text).length ? '<div class="entry-text">' + paras(it.text) + "</div>" : "") +
       (list(it.bullets).length ? '<ul class="entry-bullets">' + list(it.bullets).map(function (b) { return "<li>" + br(t(b)) + "</li>"; }).join("") + "</ul>" : "") +
       coursesHTML(it) +
@@ -310,13 +371,19 @@
     var prev = ids[i - 1], next = ids[i + 1];
     // 访客看不到空分组；管理模式下保留，方便往里面加条目
     var admin = document.documentElement.classList.contains("is-admin");
-    var groups = list(s.groups).map(function (g, gi) {
-      var title = t(g.title);
-      var base = "sections." + id + ".groups." + gi;
-      var items = list(g.items).map(function (it, j) { return entryHTML(it, base + ".items." + j); }).join("");
-      if (!items && !admin) return "";
-      return '<section class="group" data-edit="' + base + '">' + (title ? '<h2 class="group-title">' + title + "</h2>" : "") +
-        (items ? '<div class="group-list">' + items + "</div>" : "") + "</section>";
+    var multi = partsOf(id).length > 1;
+    var groups = partsOf(id).map(function (k) {
+      var html = viewGroups(k).map(function (g) {
+        var items = g.entries.map(function (e) { return entryHTML(e.it, e.path); }).join("");
+        if (!items && !admin) return "";
+        return '<section class="group"' + (g.path ? ' data-edit="' + g.path + '"' : "") + ">" +
+          (g.title ? '<h2 class="group-title">' + g.title + "</h2>" : "") +
+          (items ? '<div class="group-list">' + items + "</div>" : "") + "</section>";
+      }).join("");
+      if (!html && !admin) return "";
+      return '<div class="part" data-part="' + k + '"' + (multi ? ' id="' + k + '"' : "") + ">" +
+        (multi ? '<header class="cv-block-head part-head"><span class="cv-block-icon">' + icon(k) + "</span><h2>" + ui(k) + "</h2></header>" : "") +
+        html + "</div>";
     }).join("");
     if (!groups && !s.github && !admin) groups = '<p class="empty-note">' + ui("empty") + "</p>";
     function pageLink(k, cls, ic, before) {

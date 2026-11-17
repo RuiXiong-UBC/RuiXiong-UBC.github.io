@@ -367,6 +367,11 @@ main > .hero--page { flex: 1 0 auto; }
 .cv-block-head h3 { margin: 0 auto 0 0; font-size: 28px; font-weight: 700; line-height: 1.2; letter-spacing: -0.025em; }
 .cv-more { display: inline-flex; align-items: center; font-size: 15px; white-space: nowrap; }
 .cv-group-title { margin: 24px 0 8px 20px; color: var(--muted); font-size: 13px; font-weight: 400; }
+.cv-empty { margin: 0 0 0 20px; color: var(--muted); font-size: 15px; }
+/* sub-page split into parts (publications, then projects) */
+.part + .part { margin-top: 64px; }
+.part[id] { scroll-margin-top: 72px; }
+.part-head h2 { margin: 0 auto 0 0; font-size: 28px; font-weight: 700; line-height: 1.2; letter-spacing: -0.025em; }
 .cv-block-head + .cv-group-title { margin-top: 0; }
 .entry.entry--compact { grid-template-columns: minmax(0, 1fr) 48px; gap: 16px; align-items: center; padding: 14px 20px; }
 .entry.entry--compact.no-logo { grid-template-columns: minmax(0, 1fr); }
@@ -421,6 +426,10 @@ main > .hero--page { flex: 1 0 auto; }
 .entry-title a:hover { color: var(--accent); }
 .entry-org { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
 .entry-org span + span::before { content: "·"; margin: 0 0.45em; }
+/* certificate / award kind and school stage */
+.entry-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
+.tag { padding: 2px 9px; border-radius: 999px; background: var(--fill); color: var(--muted); font-size: 12px; font-weight: 500; line-height: 1.5; }
+.tag:first-child { background: var(--accent-soft); color: var(--accent); }
 .entry-authors { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
 .entry-authors b { color: var(--ink); font-weight: 600; }
 .entry-venue { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
