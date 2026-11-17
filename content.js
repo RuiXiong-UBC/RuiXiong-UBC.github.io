@@ -374,7 +374,7 @@ window.SITE = {
               "kind": "scholarship",
               "stage": "undergrad",
               "logo": "images/Schools/UBC_sign.jpg",
-              "bullets": [
+              "text": [
                 {
                   "zh": "UBC 择优入学奖学金",
                   "en": "Merit-based entrance scholarship at UBC"
@@ -393,7 +393,7 @@ window.SITE = {
               },
               "kind": "award",
               "stage": "highschool",
-              "bullets": [
+              "text": [
                 {
                   "zh": "面向高中生的国际团队数学建模竞赛",
                   "en": "International team contest in mathematical modeling for high school students"
