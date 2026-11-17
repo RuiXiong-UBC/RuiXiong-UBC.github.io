@@ -18,7 +18,7 @@ window.SITE = {
         "en": "Email"
       },
       "text": "ray.xiongrui@outlook.com",
-      "url": "ray.xiongrui@outlook.com"
+      "url": "mailto:ray.xiongrui@outlook.com"
     },
     {
       "label": "GitHub",
@@ -52,8 +52,8 @@ window.SITE = {
         "en": "I'm an undergraduate in Biomedical Engineering at the University of British Columbia. I'm interested in the full loop from neural signals to robot motion: how sensors capture EEG, force and displacement signals, how intent can be decoded from them, and how to model a robotic system and design its control so that it acts safely and reliably."
       },
       {
-        "zh": "曾参与便携式电子内窥镜产品的研发与测试，覆盖成像评估、临床需求转化和软件迭代等环节，并完成一项软件著作权申请。目前正在学习：动态系统建模与控制理论；以及嵌入式开发。",
-        "en": "I have been involved in the development and testing of a portable electronic endoscope, covering imaging evaluation, translating clinical needs into product requirements, and software iteration, and I filed a software copyright registration application. I am currently working on three areas: Dynamic System Modeling and Control Theory and Embedded Systems Development."
+        "zh": "曾参与便携式电子内窥镜产品的研发与测试，覆盖成像评估、临床需求转化和软件迭代等环节，并完成一项软件著作权申请。目前正在学习动态系统建模与控制理论，以及嵌入式开发。",
+        "en": "I have been involved in the development and testing of a portable electronic endoscope, covering imaging evaluation, translating clinical needs into product requirements, and software iteration, and I filed a software copyright registration application. I am currently learning dynamic system modeling and control theory, as well as embedded systems development."
       },
       {
         "zh": "学习之外，我也长期关注建筑设计，尤其感兴趣特殊的几何形体如何与光线、空间产生联系，以及大体量建筑的未来感设计。",
@@ -362,11 +362,43 @@ window.SITE = {
           "title": "",
           "items": [
             {
-              "time": "",
+              "time": "2025",
               "title": {
-                "zh": "新条目",
-                "en": "New entry"
-              }
+                "zh": "杰出国际学生奖（OIS）",
+                "en": "Outstanding International Student (OIS) Award"
+              },
+              "org": {
+                "zh": "不列颠哥伦比亚大学",
+                "en": "The University of British Columbia"
+              },
+              "kind": "scholarship",
+              "stage": "undergrad",
+              "logo": "images/Schools/UBC_sign.jpg",
+              "bullets": [
+                {
+                  "zh": "UBC 择优入学奖学金",
+                  "en": "Merit-based entrance scholarship at UBC"
+                }
+              ]
+            },
+            {
+              "time": "2023",
+              "title": {
+                "zh": "美国高中数学建模竞赛（HiMCM）二等奖（Honorable Mention）",
+                "en": "High School Mathematical Contest in Modeling (HiMCM) 2023, Honorable Mention"
+              },
+              "org": {
+                "zh": "美国数学及其应用联合会（COMAP）",
+                "en": "Consortium for Mathematics and Its Applications (COMAP)"
+              },
+              "kind": "award",
+              "stage": "highschool",
+              "bullets": [
+                {
+                  "zh": "面向高中生的国际团队数学建模竞赛",
+                  "en": "International team contest in mathematical modeling for high school students"
+                }
+              ]
             }
           ]
         }
