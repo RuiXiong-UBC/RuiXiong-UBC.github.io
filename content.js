@@ -77,22 +77,6 @@ window.SITE = {
           "en": "English, Chinese"
         }
       }
-    ],
-    "images": [
-      {
-        "src": "images/gallery/nl_signals.png",
-        "caption": {
-          "zh": "学习ing",
-          "en": "Studying"
-        }
-      },
-      {
-        "src": "images/gallery/lizesoho.jpg",
-        "caption": {
-          "zh": "北京丽泽SOHO",
-          "en": "Beijing Lize SOHO"
-        }
-      }
     ]
   },
   "cv": {
