@@ -375,7 +375,13 @@ window.SITE = {
               },
               "kind": "scholarship",
               "stage": "undergrad",
-              "logo": "images/uploads/mwkfpeim-1.jpg"
+              "logo": "images/uploads/mwkfpeim-1.jpg",
+              "text": [
+                {
+                  "zh": "奖学金：10,000 加元\n本届共 10,348 名本科生，获奖者 408 人",
+                  "en": "Scholarship: CAD $10,000\nAwarded to 408 of 10,348 incoming undergraduates at UBC Vancouver"
+                }
+              ]
             },
             {
               "time": "2023",
@@ -389,12 +395,18 @@ window.SITE = {
               },
               "kind": "award",
               "stage": "highschool",
-              "logo": "images/uploads/mwkesof4-2.webp"
+              "logo": "images/uploads/mwkesof4-2.webp",
+              "text": [
+                {
+                  "zh": "HiMCM 美国高中数学建模竞赛（2023，A 题）\n研究蒲公英种子的扩散规律和入侵物种的影响评估\n\n扩散模型：基于机理分析建立类 Maxwell 概率密度模型，把种子密度分解为距离–时间分布 f(r, t) 与方向概率函数 g(θ) 的乘积。无主导风向时，各方向概率均匀；有主导风向时，用余弦函数描述下风向偏移。用 SPSS 多元回归建立株高与温度、湿度的关系，把气候因素放进模型。用 NOAA 气候数据对比温带和干旱两种气候，预测了 1 到 12 个月的扩散分布。\n评价模型：用层次分析法（AHP）构建 5 个一级指标、14 个二级指标的评价体系。权重分别用算术平均、几何平均和特征值三种方法计算后取平均，并通过一致性检验（CR < 0.1）。用这个模型算出蒲公英、黑木相思和鼠李的影响因子，结论与官方入侵物种名录一致。",
+                  "en": "HiMCM (2023, Problem A)\nModeled dandelion seed dispersal and assessed how harmful invasive plant species are\n\nDispersal model: Built a quasi-Maxwell probability density model from mechanistic analysis. Seed density is factored into a distance–time distribution f(r, t) times a directional function g(θ): uniform when there is no prevailing wind, and a cosine-based function that skews seeds downwind when there is one. Plant height comes from a multiple regression on temperature and humidity (SPSS), which brings climate into the model. Using NOAA data, the model predicted dispersal from 1 to 12 months for a temperate and an arid climate.\nEvaluation model: Built an Analytic Hierarchy Process (AHP) framework with 5 primary and 14 secondary indicators. Weights were computed with three methods (arithmetic mean, geometric mean, eigenvector), averaged, and checked for consistency (CR < 0.1). The model’s impact factors for dandelion, Acacia melanoxylon and buckthorn matched official invasive-species listings."
+                }
+              ]
             },
             {
               "time": "2026",
               "title": {
-                "zh": "不列颠哥伦比亚省工程师与地球科学家协会会员",
+                "zh": "不列颠哥伦比亚省工程师与地球科学家协会学生会员",
                 "en": "Student Member, Engineers and Geoscientists BC"
               },
               "org": {
@@ -402,12 +414,18 @@ window.SITE = {
                 "en": "Engineers and Geoscientists BC"
               },
               "stage": "undergrad",
-              "logo": "images/uploads/mwkfpeim-2.png"
+              "logo": "images/uploads/mwkfpeim-2.png",
+              "text": [
+                {
+                  "zh": "EGBC 是不列颠哥伦比亚省工程与地球科学行业的法定监管机构。\n作为学生会员，我已正式进入 P.Eng.（注册专业工程师）的执业路径，并参加该机构组织的行业活动与职业发展资源。",
+                  "en": "EGBC is the statutory regulator of engineering and geoscience in British Columbia. \nAs a Student Member, I am formally on the pathway to licensure as a Professional Engineer (P.Eng.) and take part in EGBC’s industry events and professional development resources."
+                }
+              ]
             }
           ]
         }
       ],
-      "heroImage": "images/uploads/mwkcvmon-4.jpg"
+      "heroImage": "images/uploads/mwloq5gp-1.jpg"
     },
     "publications": {
       "title": {
