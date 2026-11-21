@@ -386,7 +386,7 @@ window.SITE = {
             {
               "time": "2023",
               "title": {
-                "zh": "美国高中数学建模竞赛（HiMCM）二等奖（Honorable Mention）",
+                "zh": "美国高中数学建模竞赛（HiMCM）提名奖（Honorable Mention）",
                 "en": "High School Mathematical Contest in Modeling (HiMCM) 2023, Honorable Mention"
               },
               "org": {
