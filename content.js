@@ -206,6 +206,13 @@ window.SITE = {
       "groups": [
         {
           "title": {
+            "zh": "工作经历",
+            "en": "Work"
+          },
+          "items": []
+        },
+        {
+          "title": {
             "zh": "实习经历",
             "en": "Internships"
           },
@@ -340,13 +347,6 @@ window.SITE = {
               ]
             }
           ]
-        },
-        {
-          "title": {
-            "zh": "工作经历",
-            "en": "Work"
-          },
-          "items": []
         }
       ]
     },
